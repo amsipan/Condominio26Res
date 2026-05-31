@@ -126,7 +126,51 @@ Administrador
 
 # CU-05 Definir Permisos de Rol
 
-(Contenido)
+## Descripción
+
+Permite al Administrador definir los permisos de un rol en el sistema del condominio.
+
+## Actor Principal
+
+Administrador
+
+## Precondiciones
+
+- El Administrador ha iniciado sesión.
+- Posee permisos para gestionar roles.
+
+## Postcondiciones
+
+- Los permisos del rol quedan registrados en el sistema.
+
+## Escenario Básico
+
+1. El caso de uso comienza cuando el Administrador define los permisos de un rol nuevo.
+2. El Administrador proporciona el nombre del rol.
+3. El Sistema valida el nombre del rol entonces el Administrador proporciona los permisos del rol.
+4. El Sistema valida los permisos del rol entonces el Administrador confirma la definición de permisos.
+5. El Sistema registra el rol con sus permisos.
+6. El caso de uso termina cuando el Sistema muestra el mensaje "Permisos del rol registrados exitosamente".
+
+## Escenarios Alternativos 
+
+### A1. Editar permisos de un rol existente
+
+1. El caso de uso comienza cuando el Administrador edita los permisos de un rol existente.
+2. El Administrador proporciona el nombre del rol.
+3. El Sistema valida el nombre del rol entonces el Administrador proporciona los nuevos permisos del rol.
+4. El Sistema valida los nuevos permisos del rol entonces el Administrador confirma la edición de permisos.
+5. El Sistema actualiza los permisos del rol.
+6. El caso de uso termina cuando el Sistema muestra el mensaje "Permisos del rol actualizados exitosamente".
+
+### A2. Campos incompletos
+
+1. El caso de uso comienza cuando el Administrador define los permisos de un rol nuevo.
+2. El Administrador proporciona el nombre del rol.
+3. El Sistema valida el nombre del rol entonces el Administrador proporciona los permisos del rol.
+4. El Sistema detecta que uno o más campos obligatorios están vacíos.
+5. El Sistema muestra el mensaje "Todos los campos son obligatorios".
+6. El caso de uso finaliza sin definir los permisos del rol.
 
 ---
 
