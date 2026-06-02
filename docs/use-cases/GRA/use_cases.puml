@@ -1,0 +1,63 @@
+@startuml
+skinparam actorStyle awesome
+left to right direction
+
+actor "Administrador" as Admin
+actor "Residente" as Residente
+actor "Sistema (Automático)" as Sistema
+
+rectangle "Módulo de Pagos y Finanzas" {
+
+    ' --- Casos de Uso Existentes ---
+    usecase "registrarPagoDeudaDeAlicuotaOrdinaria" as UC_E1
+    usecase "registrarPagoDeMulta" as UC_E2
+    usecase "registrarPagoDeUnaReservaDeEspacioComún" as UC_E3
+    usecase "registrarDeudasPorConceptoDeMulta" as UC_E4
+    usecase "registrarDeudasPorConceptoDeReservaDeEspacioComun" as UC_E5
+    usecase "registrarDeudaDePagoDeAlicuotaOrdinariaDeFormaMensual" as UC_E6
+    usecase "consultarDeudasEnProcesoDePago" as UC_E7
+    usecase "registrarPagoEnEfectivo" as UC_A1
+    usecase "registrarPagoPorTransferencia" as UC_A2
+    usecase "modificarFechaMaximaDePagoDeUnaDeuda" as UC_R1
+    usecase "consultarDeudasPendientesPorNúmeroDeCédulaDeIdentidad" as UC_R2
+    usecase "definirValorMensualDeAlicuotas" as UC_R3
+    usecase "definirPagoDeAlicuotasDeFormaMensual" as UC_R4
+    usecase "generarReporteDePagosRealizados" as UC_B1
+    usecase "enviarRecordartorioDeDeudaPendiente" as UC_B2
+    usecase "registrarEntidadBancaria" as UC_F1
+    usecase "consultarPagosEfectuados" as UC_F2
+    usecase "solicitarPagoEnCuotas" as UC_F3
+    usecase "eliminarFormaDePagoRecurrente" as UC_F4
+    usecase "eliminarDeuda" as UC_F5
+    usecase "generarCertificadoDeNoDeudor" as UC_F6
+}
+
+' --- Relaciones del Residente ---
+Residente --> UC_E1
+Residente --> UC_E2
+Residente --> UC_E3
+Residente --> UC_F2
+Residente --> UC_F3
+Residente --> UC_F4
+Residente --> UC_F6
+Residente --> UC_R4
+' --- Relaciones del Administrador ---
+Admin --> UC_E4
+Admin --> UC_E5
+Admin --> UC_E7
+Admin --> UC_A1
+Admin --> UC_A2
+Admin --> UC_R1
+Admin --> UC_R2
+Admin --> UC_R3
+' UC_R4 fue eliminado de aquí
+Admin --> UC_B1
+Admin --> UC_F1
+Admin --> UC_F2
+Admin --> UC_F5
+
+' --- Relaciones del Sistema (Procesos Automáticos) ---
+Sistema --> UC_E6
+Sistema --> UC_B2
+
+@enduml
