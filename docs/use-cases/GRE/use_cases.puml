@@ -9,32 +9,31 @@ actor "Residente" as Residente
 
 rectangle "Módulo - Check-in" {
 
-  usecase "Enviar alerta" as EnviarAlerta
-  usecase "Programar visita" as ProgramarVisita
-  usecase "Registrar entrada" as RegistrarEntrada
+  usecase "enviarAlerta" as enviarAlerta
+  usecase "programarVisita" as programarVisita
+  usecase "registrarEntrada" as registrarEntrada
 
-  usecase "Notificar entrada" as NotificarEntrada
-  usecase "Registrar historial" as RegistrarHistorial
-  usecase "Registrar ingreso\nparqueadero" as RegistrarIngresoParqueadero
+  usecase "notificarEntrada" as notificarEntrada
+  usecase "registrarHistorial" as registrarHistorial
+  usecase "registrarIngresoParqueadero" as registrarIngresoParqueadero
 
-
-  RegistrarEntrada -[hidden]right- NotificarEntrada
-  NotificarEntrada -[hidden]right- RegistrarHistorial
-  RegistrarHistorial -[hidden]right- RegistrarIngresoParqueadero
+  registrarEntrada -[hidden]right- notificarEntrada
+  notificarEntrada -[hidden]right- registrarHistorial
+  registrarHistorial -[hidden]right- registrarIngresoParqueadero
 
 }
 
-Administrador --> EnviarAlerta
+Administrador --> enviarAlerta
 
-Seguridad --> RegistrarEntrada
-ProgramarVisita --> Seguridad
-Seguridad --> EnviarAlerta
+Seguridad --> registrarEntrada
+programarVisita --> Seguridad
+Seguridad --> enviarAlerta
 
-Residente --> ProgramarVisita
-EnviarAlerta --> Residente
+Residente --> programarVisita
+enviarAlerta --> Residente
 
-RegistrarEntrada ..> NotificarEntrada : <<include>>
-RegistrarEntrada ..> RegistrarHistorial : <<include>>
-RegistrarIngresoParqueadero ..> RegistrarEntrada : <<extend>>
+registrarEntrada ..> notificarEntrada : <<include>>
+registrarEntrada ..> registrarHistorial : <<include>>
+registrarIngresoParqueadero ..> registrarEntrada : <<extend>>
 
 @enduml
