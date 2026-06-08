@@ -7,6 +7,7 @@
 - [CU-03 Reservar Área Recreacional](#cu-03-reservar-área-recreacional)
 - [CU-04 Visualizar Disponibilidad de Espacios](#cu-04-visualizar-disponibilidad-de-espacios)
 - [CU-05 Cancelar Reserva](#cu-05-cancelar-reserva)
+- [CU-06 Agregar Observaciones de Reserva](#cu-06-agregar-observaciones-de-reserva)
 
 ---
 
@@ -173,3 +174,37 @@ Residente
 - La reserva queda cancelada dentro del sistema.
 - El espacio liberado queda nuevamente disponible para el horario correspondiente.
 - El sistema conserva un registro de la cancelación realizada.
+
+---
+
+# CU-06 Agregar Observaciones de Reserva
+
+## Descripción
+
+Permite al Residente o al Administrador registrar observaciones, comentarios o notas especiales asociadas a una reserva específica.
+
+## Actor Principal
+
+Residente, Administrador
+
+## Precondiciones
+
+- El usuario (Residente o Administrador) debe haber iniciado sesión en el sistema.
+- Debe existir la reserva correspondiente registrada en el sistema.
+- El módulo de reservas debe encontrarse disponible.
+
+## Flujo Principal
+
+1. El usuario ingresa al módulo de reservas de espacios comunes.
+2. El sistema muestra el listado de reservas (reservas del Residente si es este actor, o todas las reservas si es Administrador).
+3. El usuario selecciona la reserva a la cual desea agregar observaciones.
+4. El usuario selecciona la opción de agregar observaciones.
+5. El usuario ingresa el texto de la observación.
+6. El sistema valida que la información ingresada sea correcta.
+7. El sistema registra las observaciones y las asocia a la reserva.
+8. El sistema notifica al usuario la confirmación del registro de observaciones.
+
+## Postcondiciones
+
+- Las observaciones quedan asociadas a la reserva dentro del sistema.
+- El sistema conserva la fecha, hora y datos del usuario asociado en el registro de la observación.

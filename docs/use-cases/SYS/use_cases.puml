@@ -143,15 +143,20 @@ rectangle "Condominio (El Sistema)" {
     ' --- MÓDULO GRD ---
     rectangle "GRD - Módulo de Reservas de Espacios Comunes" as Modulo_Reservas_EC {
         actor "Residente" as Residente_D
+        actor "Administrador" as Admin_D
         
         usecase "reservarAreaComun" as GRD_ReservarArea
         usecase "reservarSalonDeEventos" as GRD_ReservarSalon
         usecase "reservarAreaRecreacional" as GRD_ReservarRecreacional
         usecase "visualizarDisponibilidadDeEspacios" as GRD_VisualizarDisp
         usecase "cancelarReserva" as GRD_CancelarReserva
+        usecase "agregarObservacionesDeReserva" as GRD_AgregarObservaciones
         
         Residente_D -right-> GRD_ReservarArea
         Residente_D -right-> GRD_CancelarReserva
+        Residente_D -right-> GRD_AgregarObservaciones
+        
+        Admin_D -right-> GRD_AgregarObservaciones
         
         GRD_ReservarSalon -up-|> GRD_ReservarArea
         GRD_ReservarRecreacional -down-|> GRD_ReservarArea

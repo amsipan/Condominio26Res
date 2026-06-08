@@ -7,6 +7,7 @@ skinparam packageStyle rectangle
 skinparam linetype orthogonal
 
 actor Residente
+actor Administrador
 
 rectangle "Módulo\n de Reservas de Espacios Comunes" {
 
@@ -15,6 +16,7 @@ rectangle "Módulo\n de Reservas de Espacios Comunes" {
     usecase "reservarAreaRecreacional" as UC3
     usecase "visualizarDisponibilidadDeEspacios" as UC4
     usecase "cancelarReserva" as UC5
+    usecase "agregarObservacionesDeReserva" as UC6
 
     ' Definimos las herencias (las flechas irán limpias hacia la izquierda)
     UC2 -up-|> UC1
@@ -27,5 +29,7 @@ rectangle "Módulo\n de Reservas de Espacios Comunes" {
 ' El actor se conecta de forma limpia a las opciones principales
 Residente --> UC1
 Residente --> UC5
+Residente --> UC6
+Administrador --> UC6
 
 @enduml

@@ -9,7 +9,7 @@ El Sistema Condominio es una plataforma integral orientada a facilitar la admini
 1. **GRA (Pagos y Finanzas):** Gestión de alícuotas, cobros, diferimiento de deudas y reportes de solvencia.
 2. **GRB (Gestión de Usuarios y Administradores):** Control de acceso, perfiles, asignación de roles y permisos.
 3. **GRC (Gestión de Inmuebles):** Control del inventario físico (edificios, departamentos, locales), asignación de propietarios y agenda de reservas general.
-4. **GRD (Reservas de Espacios Comunes):** Reservación específica de áreas comunes, salones de eventos, control de disponibilidad y cancelaciones por los residentes.
+4. **GRD (Reservas de Espacios Comunes):** Reservación específica de áreas comunes, salones de eventos, control de disponibilidad, cancelaciones por los residentes y registro de observaciones.
 5. **GRE (Check-in / Accesos):** Control y registro de entrada de visitantes, registro de vehículos y parqueaderos, programación de visitas y envío de alertas de seguridad.
 6. **GRF (Comunicación):** Difusión de anuncios, envío de mensajería interna global y segmentada a residentes y trabajadores.
 
@@ -440,6 +440,26 @@ A continuación se definen los actores que interactúan con el sistema:
     - La reserva queda cancelada dentro del sistema.
     - El espacio liberado queda nuevamente disponible para el horario correspondiente.
     - El sistema conserva un registro de la cancelación realizada.
+
+#### UC-GRD-06: agregarObservacionesDeReserva
+*   **Descripción:** Permite al Residente o al Administrador registrar observaciones, comentarios o notas especiales asociadas a una reserva específica.
+*   **Actor Principal:** Residente, Administrador
+*   **Precondiciones:**
+    - El usuario (Residente o Administrador) debe haber iniciado sesión en el sistema.
+    - Debe existir la reserva correspondiente registrada en el sistema.
+    - El módulo de reservas debe encontrarse disponible.
+*   **Flujo Principal:**
+    1. El usuario ingresa al módulo de reservas de espacios comunes.
+    2. El sistema muestra el listado de reservas (las reservas asociadas al Residente si es este actor, o todas las reservas del sistema si es el Administrador).
+    3. El usuario selecciona la reserva a la cual desea agregar observaciones.
+    4. El usuario selecciona la opción de agregar observaciones.
+    5. El usuario ingresa el texto de la observación.
+    6. El sistema valida que la información ingresada sea correcta.
+    7. El sistema registra las observaciones y las asocia a la reserva.
+    8. El sistema notifica al usuario la confirmación del registro de observaciones.
+*   **Postcondiciones:**
+    - Las observaciones quedan asociadas a la reserva dentro del sistema.
+    - El sistema conserva la fecha, hora y datos del usuario asociado en el registro de la observación.
 
 ---
 
