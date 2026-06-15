@@ -1,24 +1,242 @@
+
+
 # Módulo de Finanzas y Pagos GRA
 
 ## Índice
 
+### Casos de uso Presidente
+
+- [registrarDeuda](#requisito-registrardeuda)
+- [registrarPagoEfectivoTransferenciaResidente](#requisito-registrarpagoefectivotransferenciaresidente)
+- [modificarFechaMaximaDePagoDeUnaDeuda](#requisito-modificarfechamaximadepagodeunadeuda)
+- [definirValorMensualDeAlicuotas](#requisito-definirvalormensualdealicuotas)
 - [generarReporteDePagosRealizados](#requisito-generareportedepagosrealizados)
 - [registrarEntidadBancaria](#requisito-registrarentidadbancaria)
 - [eliminarDeuda](#requisito-eliminarDeuda)
-- [registrarDeuda](#requisito-registrardeuda)
-- [registrarPagoEnEfectivo/Transferencia](#requisito-registrarpagoenefectivotransferencia)
-- [modificarFechaMaximaDePagoDeUnaDeuda](#requisito-modificarfechamaximadepagodeunadeuda)
-- [definirValorMensualDeAlicuotas](#requisito-definirvalormensualdealicuotas)
-- [consultarDeuda](#requisito-consultardeuda)
-- [consultarPagosEfectuados](#requisito-consultarpagosefectuados)
+- [generarReporteRendicionCuentas](#requisito-eliminarDeuda)
+- [registrarPagosCondominio](#requisito-eliminarDeuda)
+- [generarReporteGastos](#requisito-eliminarDeuda)
+
+
+### Casos de uso Residente
+- [pagarDeuda](#requisito-registrarpago)
+- [registrarPagoMensualRecurrenteAlicuotas](#requisito-definirpagodealicuotasdeformamensual)
 - [solicitarPagoEnCuotas](#requisito-solicitarpagoencuotas)
 - [eliminarFormaDePagoRecurrente](#requisito-eliminarformadepagorecurrente)
 - [generarCertificadoDeNoDeudor](#requisito-generarcertificadodenodeudor)
-- [registrarPago](#requisito-registrarpago)
-- [definirPagoDeAlicuotasDeFormaMensual](#requisito-definirpagodealicuotasdeformamensual)
-- [registrarDeudaMensual](#requisito-registrardeudamensual)
-- [enviarRecordatorioDeDeudaPendiente](#requisito-enviarrecordatoriodedeudapendiente)
 
+
+### Casos de uso compartidos
+
+- [consultarDeuda](#requisito-consultardeuda)
+- [consultarPagosEfectuados](#requisito-consultarpagosefectuados)
+- [consultarReporteRendicionCuentas](#requisito-consultarpagosefectuados)
+
+
+### Casos de uso del Sistema
+
+
+- [registrarDeudaAlicuotaMensual](#requisito-registrardeudamensual)
+- [enviarRecordatorioDeDeudaPendiente](#requisito-enviarrecordatoriodedeudapendiente)
+- [registrarMoraDeuda](#requisito-enviarrecordatoriodedeudapendiente)
+- [notificarReporteRendicionCuentas](#requisito-enviarrecordatoriodedeudapendiente)
+
+
+---
+
+
+# Requisito: registrarDeuda
+
+El sistema permitirá registrar una deuda para un Residente
+
+## Datos del Caso de Uso
+
+- **Entradas:** número de cédula de identidad del residente que cumple el algoritmo de validacion de cedula Ecuatoriana, motivo de la deuda (ALICUOTA, MULTA, RESERVA), fecha maxima de pago mayor a la fecha actual, descripcion, caracteres del alfabeto y " ", ".", ",", "ñ", valor de la deuda, flotante de 2 decimales.
+- **Salidas:** mensaje
+
+## Escenario Básico
+
+1. El caso de uso inicia con el Presidente/Administrador ingresando el número de cedula de identidad del Residente
+2. El Sistema verifica que exista un Residente con el número de cédula de identidad proporcionado
+3. Si el Residente existe, entonces el Presidente/Administrador ingresa el motivo de la deuda
+4. El Presidente/Administrador ingresa la fecha máxima de pago
+5. El Presidente/Administrador ingresa la descripcion
+6. El Presidente/Administrador ingresa el valor de la deuda
+7. El Sistema valida que todos los datos tengan un formato válido
+8. Si todos los datos tienen un formato válido, entonces el sistema verifica que el motivo de la deuda sea "ALICUOTA", "MULTA" O "RESERVA"
+9. Si el motivo de la deuda es ALICUOTA, entonces el Sistema consulta el valor mensual de alícuotas, el departamento del residente, el tamaño del condomio, y calcula el valor de la deuda por alicuota.
+10. El caso de uso finaliza con Sistema emitiendo el mensaje: "Deuda por motivo de alicuota con el valor de valorDeuda registrada exitosamente para el residente nombreResidente"
+
+
+## Escenarios Alternos
+
+### Escenario Alterno 1
+1. El caso de uso inicia con el Presidente/Administrador ingresando el número de cedula de identidad del Residente
+2. El Sistema verifica que exista un Residente con el número de cédula de identidad proporcionado
+3. Si el Residente existe, entonces el Presidente/Administrador ingresa el motivo de la deuda
+4. El Presidente/Administrador ingresa la fecha máxima de pago
+5. El Presidente/Administrador ingresa la descripcion
+6. El Presidente/Administrador ingresa el valor de la deuda
+7. El Sistema valida que todos los datos tengan un formato válido
+8. Si todos los datos tienen un formato válido, entonces el sistema verifica que el motivo de la deuda sea "ALICUOTA", "MULTA" O "RESERVA"
+9. Si el motivo de la deuda es MULTA, el caso de uso finaliza con Sistema emitiendo el mensaje: "Deuda por motivo de multa con el valor de valorDeuda registrada exitosamente para el residente nombreResidente"
+
+### Escenario Alterno 2
+
+1. El caso de uso inicia con el Presidente/Administrador ingresando el número de cedula de identidad del Residente
+2. El Sistema verifica que exista un Residente con el número de cédula de identidad proporcionado
+3. Si el Residente existe, entonces el Presidente/Administrador ingresa el motivo de la deuda
+4. El Presidente/Administrador ingresa la fecha máxima de pago
+5. El Presidente/Administrador ingresa la descripcion
+6. El Presidente/Administrador ingresa el valor de la deuda
+7. El Sistema valida que todos los datos tengan un formato válido
+8. Si todos los datos tienen un formato válido, entonces el sistema verifica que el motivo de la deuda sea "ALICUOTA", "MULTA" O "RESERVA"
+9. Si el motivo de la deuda es RESERVA, el caso de uso finaliza con Sistema emitiendo el mensaje: "Deuda por motivo de reserva con el valor de valorDeuda registrada exitosamente para el residente nombreResidente"
+
+### Escenario Alterno 3
+
+1. El caso de uso inicia con el Presidente/Administrador ingresando el número de cedula de identidad del Residente
+2. El Sistema verifica que exista un Residente con el número de cédula de identidad proporcionado
+3. Si el Residente NO existe, entonces el Sistema emite el mensaje "No existe un cliente con el número de cédula de identidad proporcionada"
+4. El caso de uso finaliza sin registrar una nueva deuda
+
+
+### Escenario Alterno 4
+
+1. El caso de uso inicia con el Presidente/Administrador ingresando el número de cedula de identidad del Residente
+2. El Sistema verifica que exista un Residente con el número de cédula de identidad proporcionado
+3. Si el Residente existe, entonces el Presidente/Administrador ingresa el motivo de la deuda
+4. El Presidente/Administrador ingresa la fecha máxima de pago
+5. El Presidente/Administrador ingresa la descripcion
+6. El Presidente/Administrador ingresa el valor de la deuda
+7. El Sistema valida que todos los datos tengan un formato válido
+8. Si los datos NO tienen un formato válido, entonces el Sistema emite el mensaje de error correspondiente
+9. El caso de uso finaliza sin que se registre una nueva deuda.
+
+---
+
+
+
+# Requisito: registrarPagoEfectivoTransferenciaResidente
+
+## Datos del Caso de Uso
+
+- **Entradas:** idDeuda
+- **Salidas:** mensaje
+
+## Escenario Básico
+
+1. El caso de uso inicia con el Presidente/Administrador ingresando el idDeuda.
+2. El Sistema verifica el idDeuda.
+3. SI existe una Deuda con el idDeuda ENTONCES el Sistema verifica el estado de la Deuda.
+4. SI el estado de la Deuda es ‘PENDIENTE’ ENTONCES el Presidente/Administrador cambia el estado de la Deuda a ‘PAGADA’.
+5. El Sistema muestra el mensaje “Pago egistrado exitosamente”.
+6. El caso de uso finaliza con el cambio de estado de la Deuda a 'PAGADA'.
+
+## Escenarios Alternos
+
+### Escenario Alterno 1
+
+1. El caso de uso inicia con el Presidente/Administrador ingresando el idDeuda.
+2. El Sistema verifica el idDeuda.
+3. SI NO existe una Deuda con el idDeuda ENTONCES el Sistema muestra el mensaje “No existe una deuda con el identificador proporcionado”.
+4. El caso de uso termina sin registrar el pago.
+
+### Escenario Alterno 2
+
+1. El caso de uso inicia con el Presidente/Administrador ingresando el idDeuda.
+2. El Sistema verifica el idDeuda.
+3. SI existe una Deuda con el idDeuda ENTONCES el Sistema verifica el estado de la Deuda.
+4. SI el estado de la Deuda es ‘PAGADA’ ENTONCES el Sistema emite el mensaje “Esta deuda ya ha sido pagada”.
+5. El caso de uso termina sin registrar el pago.
+
+---
+
+
+# Requisito: modificarFechaMaximaDePagoDeUnaDeuda
+El sistema permitirá modificar la fecha máxima de pago de una deuda.
+
+## Datos del Caso de Uso
+
+- **Entradas:** idDeuda
+- **Salidas:** mensaje
+
+## Escenario Básico:
+
+1. El caso de uso inicia con el Presidente/Administrador ingresando el idDeuda.
+2. El Sistema verifica el idDeuda ingresado.
+3. SI existe una deuda ENTONCES el El Presidente/Administrador ingresa la nueva fecha de pago.
+4. El Sistema valida la nueva fecha de pago ingresada.
+5. SI la fecha de pago es válida ENTONCES el Sistema modifica la fecha máxima de pago de la deuda.
+6. El caso de uso termina con el Sistema emitiendo el mensaje "Fecha máxima de pago modificada con éxito".
+
+## Escenario(s) alternativo(s):
+
+### Escenario alternativo 1:
+
+1. El caso de uso inicia con el Presidente/Administrador ingresando el idDeuda.
+2. El Sistema verifica el idDeuda ingresado.
+3. SI NO existe una deuda ENTONCES el caso de uso termina con el Sistema emitiendo el mensaje "Deuda no registrada en el sistema".
+
+### Escenario alternativo 2:
+
+1. El caso de uso inicia con el Presidente/Administrador ingresando el idDeuda.
+2. El Sistema verifica el idDeuda ingresado.
+3. SI existe una deuda ENTONCES el El Presidente/Administrador ingresa la nueva fecha de pago.
+4. El Sistema valida la nueva fecha de pago ingresada.
+5. SI la fecha de pago NO es válida ENTONCES el caso de uso termina con el Sistema emitiendo el mensaje "La fecha ingresada no es válida, asegúrese que sea mayor que la fecha máxima de pago actual".
+
+---
+
+# Requisito: definirValorMensualDeAlicuotas
+El sistema permitirá definir el valor mensual a obtener de las alicuotas
+
+## Datos del Caso de Uso
+
+- **Entradas:** valorMensualEsperadoPorAlicuotas
+- **Salidas:** mensaje
+
+## Escenario Básico:
+
+1. El caso de uso inicia con el Presidente/Administrador  ingresando el nuevo valor mensual esperado por alicuotas.
+2. El Sistema valida el valor ingresado.
+3. SI el valor ingresado es válido ENTONCES el Sistema cambia el valor de la alícuota.
+4. El caso de uso termina con el Sistema emitiendo el mensaje “El valor mensual esperado de alicuotas se registró correctamente”.
+
+## Escenario(s) alternativo(s):
+
+### Escenario alternativo 1:
+
+1. El caso de uso inicia con el Presidente/Administrador  ingresando el nuevo valor mensual esperado por alicuotas.
+2. El Sistema valida el valor ingresado.
+3. SI el valor ingresado NO es válido ENTONCES el caso de uso termina con el Sistema emitiendo el mensaje “El valor mensual esperado de alicuotas ingresado no es válido, asegúrese que haya ingresado un número mayor a 0 con hasta 2 cifras decimales”.
+
+---
+
+# Requisito: consultarDeuda
+El sistema permitirá consultar las deudas pendientes de un residente mediante su número de cédula
+
+## Escenario Básico:**
+
+1. El caso de uso inicia con el Administrador/Residente ingresando el número de cédula de identidad.
+2. El Sistema verifica el número de cédula de identidad.
+3. SI el número de cédula de identidad es válido ENTONCES el Sistema busca deudas con estado pendiente asociadas al número de cédula ingresado.
+4. SI existen deudas con estado pendiente ENTONCES el Sistema genera un reporte con todos los detalles de las deudas encontradas.
+5. El caso de uso termina con el Sistema mostrando el reporte generado.
+
+## Escenario(s) alternativo(s):**
+
+### Escenario alternativo 1:**
+
+1. El caso de uso inicia con el Administrador/Residente ingresando el número de cédula de identidad.
+2. El Sistema verifica el número de cédula de identidad.
+3. SI el número de cédula de identidad NO es válido ENTONCES el caso de uso termina con el Sistema emitiendo el mensaje "El número de cédula ingresado no se encuentra registrado".
+
+### Escenario alternativo 2:**
+
+2. El Sistema verifica el número de cédula de identidad.
+3. SI el número de cédula de identidad es válido ENTONCES el Sistema busca deudas con estado pendiente asociadas al número de cédula ingresado.
+4. SI existen deudas con estado pendiente ENTONCES el caso de uso termina con el Sistema emitiendo el mensaje "Residente sin deudas pendientes".
 
 ---
 
@@ -147,190 +365,9 @@ El sistema permitirá a un Administrador registrar una entidad bancaria.
 
 ---
 
-# Requisito: registrarDeuda
-
-El sistema permitirá a un Administrador registrar una deuda
-
-## Datos del Caso de Uso
-
-- **Actor:** Administrador
-- **Entradas:** número de cédula de identidad del residente, motivo de la deuda (ALICUOTA, MULTA, RESERVA), fecha maxima de pago, descripcion, valor de la deuda
-- **Salidas:** mensaje
-
-## Escenario Básico
-
-1. El caso de uso inicia con el Administrador ingresando el número de cedula de identidad del Residente
-2. El Sistema verifica que exista un Residente con el número de cédula de identidad proporcionado
-3. Si el Residente existe, entonces el Administrador ingresa el motivo de la deuda
-4. El Administrador ingresa la fecha máxima de pago
-5. El Administrador ingresa la descripcion
-6. El Administrador ingresa el valor de la deuda
-7. El Sistema valida que todos los datos tengan un formato válido
-8. Si todos los datos tienen un formato válido, entonces el sistema verifica que el motivo de la deuda sea "ALICUOTA", "MULTA" O "RESERVA"
-9. Si el motivo de la deuda es ALICUOTA, entonces el Sistema consulta el valor mensual de alícuotas, el departamento del residente, el tamaño del condomio, y calcula el valor de la deuda por alicuota.
-10. El caso de uso finaliza con Sistema emitiendo el mensaje: "Deuda por motivo de alicuota con el valor de valorDeuda registrada exitosamente para el residente nombreResidente"
 
 
-## Escenarios Alternos
 
-### Escenario Alterno 1
-1. El caso de uso inicia con el Administrador ingresando el número de cedula de identidad del Residente
-2. El Sistema verifica que exista un Residente con el número de cédula de identidad proporcionado
-3. Si el Residente existe, entonces el Administrador ingresa el motivo de la deuda
-4. El Administrador ingresa la fecha máxima de pago
-5. El Administrador ingresa la descripcion
-6. El Administrador ingresa el valor de la deuda
-7. El Sistema valida que todos los datos tengan un formato válido
-8. Si todos los datos tienen un formato válido, entonces el sistema verifica que el motivo de la deuda sea "ALICUOTA", "MULTA" O "RESERVA"
-9. Si el motivo de la deuda es MULTA, el caso de uso finaliza con Sistema emitiendo el mensaje: "Deuda por motivo de multa con el valor de valorDeuda registrada exitosamente para el residente nombreResidente"
-
-### Escenario Alterno 2
-
-1. El caso de uso inicia con el Administrador ingresando el número de cedula de identidad del Residente
-2. El Sistema verifica que exista un Residente con el número de cédula de identidad proporcionado
-3. Si el Residente existe, entonces el Administrador ingresa el motivo de la deuda
-4. El Administrador ingresa la fecha máxima de pago
-5. El Administrador ingresa la descripcion
-6. El Administrador ingresa el valor de la deuda
-7. El Sistema valida que todos los datos tengan un formato válido
-8. Si todos los datos tienen un formato válido, entonces el sistema verifica que el motivo de la deuda sea "ALICUOTA", "MULTA" O "RESERVA"
-9. Si el motivo de la deuda es RESERVA, el caso de uso finaliza con Sistema emitiendo el mensaje: "Deuda por motivo de reserva con el valor de valorDeuda registrada exitosamente para el residente nombreResidente"
-
-### Escenario Alterno 3
-
-1. El caso de uso inicia con el Administrador ingresando el número de cedula de identidad del Residente
-2. El Sistema verifica que exista un Residente con el número de cédula de identidad proporcionado
-3. Si el Residente NO existe, entonces el Sistema emite el mensaje "No existe un cliente con el número de cédula de identidad proporcionada"
-4. El caso de uso finaliza sin registrar una nueva deuda
-
-
-### Escenario Alterno 4
-
-1. El caso de uso inicia con el Administrador ingresando el número de cedula de identidad del Residente
-2. El Sistema verifica que exista un Residente con el número de cédula de identidad proporcionado
-3. Si el Residente existe, entonces el Administrador ingresa el motivo de la deuda
-4. El Administrador ingresa la fecha máxima de pago
-5. El Administrador ingresa la descripcion
-6. El Administrador ingresa el valor de la deuda
-7. El Sistema valida que todos los datos tengan un formato válido
-8. Si los datos NO tienen un formato válido, entonces el Sistema emite el mensaje de error correspondiente
-9. El caso de uso finaliza sin que se registre una nueva deuda.
-
----
-
-# Requisito: registrarPagoEnEfectivo/Transferencia
-
-## Datos del Caso de Uso
-
-- **Entradas:** idDeuda
-- **Salidas:** mensaje
-
-## Escenario Básico
-
-1. El caso de uso inicia con el Administrador ingresando el idDeuda.
-2. El Sistema verifica el idDeuda.
-3. SI existe una Deuda con el idDeuda ENTONCES el Sistema verifica el estado de la Deuda.
-4. SI el estado de la Deuda es ‘PENDIENTE’ ENTONCES el Administrador cambia el estado de la Deuda a ‘PAGADA’.
-5. El Sistema muestra el mensaje “Pago egistrado exitosamente”.
-6. El caso de uso finaliza con el cambio de estado de la Deuda a 'PAGADA'.
-
-## Escenarios Alternos
-
-### Escenario Alterno 1
-
-1. El caso de uso inicia con el Administrador ingresando el idDeuda.
-2. El Sistema verifica el idDeuda.
-3. SI NO existe una Deuda con el idDeuda ENTONCES el Sistema muestra el mensaje “No existe una deuda con el identificador proporcionado”.
-4. El caso de uso termina sin registrar el pago.
-
-### Escenario Alterno 2
-
-1. El caso de uso inicia con el Administrador ingresando el idDeuda.
-2. El Sistema verifica el idDeuda.
-3. SI existe una Deuda con el idDeuda ENTONCES el Sistema verifica el estado de la Deuda.
-4. SI el estado de la Deuda es ‘PAGADA’ ENTONCES el Sistema emite el mensaje “Esta deuda ya ha sido pagada”.
-5. El caso de uso termina sin registrar el pago.
-
----
-
-# Requisito: modificarFechaMaximaDePagoDeUnaDeuda
-El sistema permitirá modificar la fecha máxima de pago de una deuda.
-
-## Escenario Básico:
-
-1. El caso de uso inicia con el Administrador ingresando el número de deuda.
-2. El Sistema verifica el número de deuda ingresado.
-3. SI el número de deuda existe ENTONCES el Sistema recupera la deuda identificada por el número de deuda.
-4. El Administrador ingresa la nueva fecha de pago.
-5. El Sistema valida la nueva fecha de pago ingresada.
-6. SI la fecha de pago es válida ENTONCES el Sistema modifica la fecha máxima de pago de la deuda.
-7. El caso de uso termina con el Sistema emitiendo el mensaje "Fecha máxima de pago modificada con éxito".
-
-## Escenario(s) alternativo(s):
-
-### Escenario alternativo 1:
-
-1. El caso de uso inicia con el Administrador ingresando el número de deuda.
-2. El Sistema verifica el número de deuda ingresado.
-3. SI el número de deuda NO existe ENTONCES el caso de uso termina con el Sistema emitiendo el mensaje "Deuda no registrada en el sistema".
-
-### Escenario alternativo 2:
-
-1. El caso de uso inicia con el Administrador ingresando el número de deuda.
-2. El Sistema verifica el número de deuda ingresado.
-3. SI el número de deuda existe ENTONCES el Sistema recupera la deuda identificada por el número de deuda.
-4. El Administrador ingresa la nueva fecha de pago.
-5. El Sistema valida la nueva fecha de pago ingresada.
-6. SI la fecha de pago NO es válida ENTONCES el caso de uso termina con el Sistema emitiendo el mensaje "La fecha ingresada no es válida, asegúrese que sea mayor que la fecha máxima de pago actual".
-
----
-
-# Requisito: definirValorMensualDeAlicuotas
-El sistema permitirá definir el valor mensual a obtener de las alicuotas
-
-## Escenario Básico:
-
-1. El caso de uso inicia con el Administrador ingresando el nuevo valor de la alícuota.
-2. El Sistema valida el valor ingresado.
-3. SI el valor ingresado es válido ENTONCES el Sistema cambia el valor de la alícuota.
-4. El caso de uso termina con el Sistema emitiendo el mensaje “Valor de la alícuota establecido correctamente”.
-
-## Escenario(s) alternativo(s):
-
-### Escenario alternativo 1:
-
-1. El caso de uso inicia con el Administrador ingresando el nuevo valor de la alícuota.
-2. El Sistema valida el valor ingresado.
-3. SI el valor ingresado NO es válido ENTONCES el caso de uso termina con el Sistema emitiendo el mensaje “El valor de la alícuota ingresado no es válido, asegúrese que haya ingresado un número mayor a 0 con hasta 2 cifras decimales”.
-
----
-
-# Requisito: consultarDeuda
-El sistema permitirá consultar las deudas pendientes de un residente mediante su número de cédula
-
-## Escenario Básico:**
-
-1. El caso de uso inicia con el Administrador/Residente ingresando el número de cédula de identidad.
-2. El Sistema verifica el número de cédula de identidad.
-3. SI el número de cédula de identidad es válido ENTONCES el Sistema busca deudas con estado pendiente asociadas al número de cédula ingresado.
-4. SI existen deudas con estado pendiente ENTONCES el Sistema genera un reporte con todos los detalles de las deudas encontradas.
-5. El caso de uso termina con el Sistema mostrando el reporte generado.
-
-## Escenario(s) alternativo(s):**
-
-### Escenario alternativo 1:**
-
-1. El caso de uso inicia con el Administrador/Residente ingresando el número de cédula de identidad.
-2. El Sistema verifica el número de cédula de identidad.
-3. SI el número de cédula de identidad NO es válido ENTONCES el caso de uso termina con el Sistema emitiendo el mensaje "El número de cédula ingresado no se encuentra registrado".
-
-### Escenario alternativo 2:**
-
-2. El Sistema verifica el número de cédula de identidad.
-3. SI el número de cédula de identidad es válido ENTONCES el Sistema busca deudas con estado pendiente asociadas al número de cédula ingresado.
-4. SI existen deudas con estado pendiente ENTONCES el caso de uso termina con el Sistema emitiendo el mensaje "Residente sin deudas pendientes".
-
----
 
 # Requisito: consultarPagosEfectuados
 

@@ -2,6 +2,14 @@
 skinparam actorStyle awesome
 left to right direction
 
+skinparam usecase {
+    BackgroundColor #E8F1FF
+    BorderColor #2F5EA8
+    ArrowColor #2F5EA8
+    ActorBorderColor #1F3F73
+    ActorBackgroundColor #EEF5FF
+}
+
 actor "Presidente" as Presidente
 actor "Residente" as Residente
 actor "Sistema (Automático)" as Sistema
@@ -16,45 +24,46 @@ rectangle "Módulo de Pagos y Finanzas" {
 
     ' CASOS DE USO DEL PRESIDENTE
     usecase "registrarDeuda" as RegistrarDeuda
-    usecase "registrarPagoEfectivoTransferencia" as RegistrarPagoEfectivoTransferencia
-    usecase "modificarFechaMaximaPago" as ModificarFechaMaximaPago
+    usecase "registrarPagoEfectivoTransferenciaResidente" as RegistrarPagoEfectivoTransferencia
+    usecase "modificarFechaMaximaPagoDeUnaDeuda" as ModificarFechaMaximaPago
     usecase "definirValorMensualAlicuotas" as DefinirValorMensualAlicuotas
     usecase "generarReportePagosRealizados" as GenerarReportePagos
     usecase "registrarEntidadBancaria" as RegistrarEntidadBancaria
     usecase "eliminarDeuda" as EliminarDeuda
     usecase "generarReporteRendicionCuentas" as GenerarReporteRendicionCuentas
-    usecase "registrarPagoServicioBasico" as RegistrarPagoServicioBasico
-    usecase "registrarPagoSueldosHonorarios" as RegistrarPagoSueldosHonorarios
-    usecase "registrarPagoOtrosGastos" as RegistrarPagoOtrosGastos
+    usecase "registrarPagosCondominio" as RegistrarPagoExterno
     usecase "generarReporteGastos" as GenerarReporteGastos
 
     ' CASOS DE USO DEL RESIDENTE
-    usecase "registrarPago" as RegistrarPago
-    usecase "definirPagoMensualAlicuotas" as DefinirPagoMensualAlicuotas
+    usecase "pagarDeuda" as pagarDeuda
+    usecase "registrarPagoMensualRecurrenteAlicuotas" as RegistrarPagoMensualAlicuotas
     usecase "solicitarPagoCuotas" as SolicitarPagoCuotas
     usecase "eliminarFormaPagoRecurrente" as EliminarFormaPagoRecurrente
     usecase "generarCertificadoNoDeudor" as GenerarCertificadoNoDeudor
-    usecase "consultarReporteRendicionCuentas" as ConsultarReporteRendicionCuentas
+    
 
     ' CASOS DE USO COMPARTIDOS
     usecase "consultarDeuda" as ConsultarDeuda
     usecase "consultarPagosEfectuados" as ConsultarPagosEfectuados
+    usecase "consultarReporteRendicionCuentas" as ConsultarReporteRendicionCuentas
 
     ' CASOS DE USO DEL SISTEMA
-    usecase "registrarDeudaMensual" as RegistrarDeudaMensual
+    usecase "registrarDeudaAlicuotaMensual" as RegistrarDeudaMensual
     usecase "enviarRecordatorioDeudaPendiente" as EnviarRecordatorioDeuda
+    usecase "registrarMoraDeDeuda" as RegistrarMoraDeDeuda
+    usecase "notificarReporteRendicionCuentas" as NotificarReporteRendicionCuentas
 }
 
 ' ------------------------
 ' Relaciones del Residente
 ' ------------------------
-Residente --> RegistrarPago
+Residente --> pagarDeuda
 Residente --> ConsultarDeuda
 Residente --> ConsultarPagosEfectuados
 Residente --> SolicitarPagoCuotas
 Residente --> EliminarFormaPagoRecurrente
 Residente --> GenerarCertificadoNoDeudor
-Residente --> DefinirPagoMensualAlicuotas
+Residente --> RegistrarPagoMensualAlicuotas
 Residente --> ConsultarReporteRendicionCuentas
 
 ' ------------------------
@@ -70,16 +79,16 @@ Presidente --> RegistrarEntidadBancaria
 Presidente --> ConsultarPagosEfectuados
 Presidente --> EliminarDeuda
 Presidente --> GenerarReporteRendicionCuentas
-Presidente --> RegistrarPagoServicioBasico
-Presidente --> RegistrarPagoSueldosHonorarios
-Presidente --> RegistrarPagoOtrosGastos
+Presidente --> RegistrarPagoExterno
 Presidente --> GenerarReporteGastos
+Presidente --> ConsultarReporteRendicionCuentas
 
 ' ------------------------
 ' Relaciones del Sistema
 ' ------------------------
 Sistema --> EnviarRecordatorioDeuda
 Sistema --> RegistrarDeudaMensual
-
+Sistema --> RegistrarMoraDeDeuda
+Sistema --> NotificarReporteRendicionCuentas
 
 @enduml
