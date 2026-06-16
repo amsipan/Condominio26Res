@@ -23,6 +23,7 @@ System_Boundary(sistema_condominio, "Sistema de Gestión de Condominio") {
 
 ' === SISTEMAS EXTERNOS ===
 System_Ext(servicio_pagos, "Servicio de Pagos", "Pasarela externa para el procesamiento de transacciones financieras.")
+System_Ext(gmail, "Gmail", "SMTP", "Recibe solicitudes de envío del código de 6 dígitos para recuperación de contraseña.")
 
 ' === RELACIONES ===
 ' Relaciones de los usuarios con la aplicación de escritorio
@@ -35,5 +36,6 @@ Rel(personal_seguridad, desktop_app, "Registra visitas y accesos", "UI")
 ' Relaciones del contenedor principal con la BD y el servicio externo
 Rel(desktop_app, database, "Lee y escribe datos en", "SQL")
 Rel(desktop_app, servicio_pagos, "Envía solicitudes de pago a", "HTTPS / API")
+Rel(desktop_app, gmail, "Envía código de recuperación de contraseña a", "SMTP")
 
 @enduml

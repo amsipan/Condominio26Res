@@ -17,6 +17,7 @@ Person(security, "Personal de Seguridad", "Gestiona visitas\ny controla accesos.
 
 System(condominio_sys, "Sistema de Gestión de Condominio", "Gestiona usuarios, pagos,\ninmuebles, reservas, visitas y comunicaciones.")
 System_Ext(payment_sys, "Sistema de Gestión de Pagos", "Procesa pagos con tarjeta y transferencias.")
+System_Ext(gmail_sys, "Gmail", "Servicio de correo externo para envío del código de recuperación de contraseña.")
 
 Rel(admin, condominio_sys, "Administra el sistema")
 Rel(president, condominio_sys, "Consulta información\ny recibe reportes")
@@ -25,5 +26,6 @@ Rel(owner, condominio_sys, "Gestiona propiedades")
 Rel(security, condominio_sys, "Registra visitas\ny accesos")
 
 Rel(condominio_sys, payment_sys, "Procesa y confirma pagos")
+Rel(condominio_sys, gmail_sys, "Envía código de recuperación\nde contraseña", "SMTP")
 
 @enduml
