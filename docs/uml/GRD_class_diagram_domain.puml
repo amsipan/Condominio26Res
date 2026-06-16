@@ -1,0 +1,101 @@
+@startuml Diagrama_Dominio_GRD
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+skinparam class {
+    BackgroundColor #E8F1FF
+    BorderColor #2F5EA8
+    ArrowColor #2F5EA8
+    FontColor #1F3F73
+}
+skinparam enum {
+    BackgroundColor #EEF5FF
+    BorderColor #1F3F73
+    FontColor #1F3F73
+}
+
+package "Entidades del Dominio - Módulo GRD" {
+
+    enum EstadoReserva {
+        PENDIENTE
+        CONFIRMADA
+        CANCELADA
+        FINALIZADA
+    }
+
+    abstract class Usuario {
+        # id: String
+        # nombre: String
+        # identificacion: String
+    }
+
+    class Residente {
+        - numeroDepartamento: String
+    }
+
+    class Administrador {
+        - cargo: String
+    }
+
+    class Reserva {
+        - id: String
+        - fechaCreacion: Date
+        - fechaReserva: Date
+        - horaInicio: Time
+        - horaFin: Time
+        - estado: EstadoReserva
+        + cambiarEstado(nuevoEstado: EstadoReserva): void
+        + agregarObservacion(obs: Observacion): void
+    }
+
+    class Observacion {
+        - id: String
+        - texto: String
+        - fechaHora: Date
+        - autor: Usuario
+    }
+
+    abstract class EspacioComun {
+        # id: String
+        # nombre: String
+        # aforoMaximo: int
+        + estaDisponible(fecha: Date, inicio: Time, fin: Time): boolean
+    }
+
+    class SalonDeEventos {
+        - costoReserva: Double
+        - requiereGarantia: boolean
+    }
+
+    class AreaRecreacional {
+        - tipoCancha: String
+        - requiereEquipamiento: boolean
+    }
+
+    class Multa {
+        - id: String
+        - monto: Double
+        - motivo: String
+        - fechaEmision: Date
+        - estadoPago: String
+    }
+
+    ' Relaciones de Herencia (Generalización)
+    Usuario <|-- Residente
+    Usuario <|-- Administrador
+    EspacioComun <|-- SalonDeEventos
+    EspacioComun <|-- AreaRecreacional
+
+    ' Relaciones Centrales del Dominio
+    Reserva "*" --> "1" Residente : "realizada por"
+    Reserva "*" --> "1" EspacioComun : "asociada a"
+    Reserva "1" *-- "*" Observacion : "contiene"
+    Multa "*" --> "1" Residente : "aplicada a"
+    Multa "1" --> "1" Reserva : "originada en"
+    Observacion "*" --> "1" Usuario : "escrita por"
+
+    ' Dependencias
+    Reserva .down.> EstadoReserva : "<<use>>"
+}
+@enduml

@@ -1,41 +1,44 @@
-@startuml
+@startuml C4_Class_Diagram_GRD_Diseno
 skinparam classAttributeIconSize 0
-skinparam packageStyle rectangle
-skinparam shadowing false
 skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 70
 
-package "Capa de Presentación (JavaFX UI & Controllers)" {
-    class VistaSeleccionReserva <<class>> {
-        + mostrarHorariosDisponibles()
-        + solicitarReserva()
+title Diseño Arquitectónico (MVC Capa 3) - Módulo GRD
+
+' ── Controladores ──
+package "Controladores (JavaFX)" #DDEEFF {
+    class VistaSeleccionReserva {
+        + mostrarHorariosDisponibles(): void
+        + solicitarReserva(): void
     }
 
-    class ControladorSeleccionReserva <<class>> {
+    class ControladorSeleccionReserva {
         - gestionReservasService: GestionReservasService
         + consultarDisponibilidad(fecha: Date, espacio: EspacioComun): List<Horario>
         + generarSolicitudReserva(espacio: EspacioComun, fecha: Date, hora: Time): void
     }
 
-    class VistaReservaUsuario <<class>> {
-        + mostrarReservasUsuario()
-        + solicitarCancelacion()
-        + agregarObservacion()
+    class VistaReservaUsuario {
+        + mostrarReservasUsuario(): void
+        + solicitarCancelacion(): void
+        + agregarObservacion(): void
     }
 
-    class ControladorReservaUsuario <<class>> {
+    class ControladorReservaUsuario {
         - gestionReservasService: GestionReservasService
         + cargarReservasPorResidente(residenteId: String): List<Reserva>
         + cancelarReserva(reservaId: String): void
         + registrarObservacion(reservaId: String, textoObservacion: String): void
     }
 
-    class VistaVisualizacionReservas <<class>> {
-        + mostrarTodasLasReservas()
-        + filtrarReservas()
-        + solicitarMulta()
+    class VistaVisualizacionReservas {
+        + mostrarTodasLasReservas(): void
+        + filtrarReservas(): void
+        + solicitarMulta(): void
     }
 
-    class ControladorVisualizacionReservas <<class>> {
+    class ControladorVisualizacionReservas {
         - gestionReservasService: GestionReservasService
         - multasService: MultasService
         + obtenerTodasReservas(): List<Reserva>
@@ -45,8 +48,9 @@ package "Capa de Presentación (JavaFX UI & Controllers)" {
     }
 }
 
-package "Capa de Lógica de Negocio (Java Services)" {
-    class GestionReservasService <<class>> {
+' ── Servicios ──
+package "Servicios (Lógica de Casos de Uso)" #DDFFDD {
+    class GestionReservasService {
         - reservaDAO: ReservaDAO
         + crearReserva(reserva: Reserva): boolean
         + cancelarReserva(reservaId: String): boolean
@@ -54,15 +58,16 @@ package "Capa de Lógica de Negocio (Java Services)" {
         + agregarObservacion(reservaId: String, observacion: Observacion): boolean
     }
 
-    class MultasService <<class>> {
+    class MultasService {
         - moduloGRA_API: APIClient
         + adjudicarMultaPorConflicto(residente: Residente, reserva: Reserva, motivo: String, monto: Double): Multa
         - enviarSolicitudPagoGRA(multa: Multa): void
     }
 }
 
-package "Capa de Acceso a Datos (Java DAO)" {
-    interface ReservaDAO <<interface>> {
+' ── Repositorios ──
+package "Repositorios (DAO)" #FFEECC {
+    interface ReservaDAO {
         + guardar(reserva: Reserva): void
         + actualizar(reserva: Reserva): void
         + buscarPorId(id: String): Reserva
@@ -70,7 +75,7 @@ package "Capa de Acceso a Datos (Java DAO)" {
         + buscarTodas(): List<Reserva>
     }
     
-    class ReservaDAOImpl <<class>> {
+    class ReservaDAOImpl {
         - dbConnection: Connection
         + guardar(reserva: Reserva): void
         + actualizar(reserva: Reserva): void
@@ -80,64 +85,53 @@ package "Capa de Acceso a Datos (Java DAO)" {
     }
 }
 
-package "Entidades del Dominio (Models)" {
-    abstract class Usuario <<abstract>> {
+' ── Entidades ──
+package "Entidades (Dominio)" #FFE0E0 {
+    abstract class Usuario {
         # id: String
         # nombre: String
         # identificacion: String
     }
 
-    class Residente <<class>> {
+    class Residente {
         - numeroDepartamento: String
     }
 
-    class Administrador <<class>> {
+    class Administrador {
         - cargo: String
     }
 
-    class Reserva <<class>> {
+    class Reserva {
         - id: String
         - fechaCreacion: Date
         - fechaReserva: Date
         - horaInicio: Time
         - horaFin: Time
-        - estado: EstadoReserva
-        + cambiarEstado(nuevoEstado: EstadoReserva): void
-        + agregarObservacion(obs: Observacion): void
     }
 
-    enum EstadoReserva <<enumeration>> {
-        PENDIENTE
-        CONFIRMADA
-        CANCELADA
-        FINALIZADA
-    }
-
-    class Observacion <<class>> {
+    class Observacion {
         - id: String
         - texto: String
         - fechaHora: Date
-        - autor: Usuario
     }
 
-    abstract class EspacioComun <<abstract>> {
+    abstract class EspacioComun {
         # id: String
         # nombre: String
         # aforoMaximo: int
-        + estaDisponible(fecha: Date, inicio: Time, fin: Time): boolean
     }
 
-    class SalonDeEventos <<class>> {
+    class SalonDeEventos {
         - costoReserva: Double
         - requiereGarantia: boolean
     }
 
-    class AreaRecreacional <<class>> {
+    class AreaRecreacional {
         - tipoCancha: String
         - requiereEquipamiento: boolean
     }
 
-    class Multa <<class>> {
+    class Multa {
         - id: String
         - monto: Double
         - motivo: String
@@ -146,23 +140,7 @@ package "Entidades del Dominio (Models)" {
     }
 }
 
-' Relaciones de Herencia (Generalización)
-Usuario <|-- Residente
-Usuario <|-- Administrador
-EspacioComun <|-- SalonDeEventos
-EspacioComun <|-- AreaRecreacional
-ReservaDAO <|.. ReservaDAOImpl
-
-' Relaciones del Dominio
-Reserva "*" --> "1" Residente : "realizada por >"
-Reserva "*" --> "1" EspacioComun : "asociada a >"
-Reserva "1" *-- "*" Observacion : "contiene >"
-Reserva "1" --> "1" EstadoReserva : "tiene estado >"
-Multa "*" --> "1" Residente : "aplicada a >"
-Multa "1" --> "1" Reserva : "originada en >"
-Observacion "*" --> "1" Usuario : "escrita por >"
-
-' Relaciones de Arquitectura (Dependencias y Asociaciones)
+' ── Relaciones Arquitectónicas ──
 VistaSeleccionReserva ..> ControladorSeleccionReserva
 VistaReservaUsuario ..> ControladorReservaUsuario
 VistaVisualizacionReservas ..> ControladorVisualizacionReservas
@@ -173,5 +151,19 @@ ControladorVisualizacionReservas --> GestionReservasService
 ControladorVisualizacionReservas --> MultasService
 
 GestionReservasService --> ReservaDAO
+ReservaDAO <|.. ReservaDAOImpl
+
+' ── Dependencias hacia el Dominio ──
+GestionReservasService ..> Reserva
+GestionReservasService ..> Observacion
+MultasService ..> Multa
+MultasService ..> Residente
+MultasService ..> Reserva
+
+' ── Herencias del Dominio (Estructura interna simplificada) ──
+Usuario <|-- Residente
+Usuario <|-- Administrador
+EspacioComun <|-- SalonDeEventos
+EspacioComun <|-- AreaRecreacional
 
 @enduml
