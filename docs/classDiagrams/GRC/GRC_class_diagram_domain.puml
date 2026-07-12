@@ -3,14 +3,6 @@ skinparam classAttributeIconSize 0
 skinparam linetype ortho
 
 ' ==========================================
-' REFERENCIA A MÓDULO GRB (USUARIOS)
-' ==========================================
-class Usuario <<Partial GRB>> {
-    - idUsuario: String
-    - nombre: String
-}
-
-' ==========================================
 ' CLASE ABSTRACTA PADRE (INMUEBLE)
 ' ==========================================
 abstract class Inmueble {
@@ -187,6 +179,5 @@ Inmueble "1" --> "*" ReporteCambio
 Inmueble "1" --> "*" CasoFortuito : "registra"
 
 Propiedad "*" --> "1" Inmueble : "asociada a"
-Propiedad "*" --> "1" Usuario : "pertenece a (Propietario)"
 PlazaPropietario "*" --> "1" Propiedad : "asignada a"
 @enduml
